@@ -1,4 +1,3 @@
-//models go here
 const db = require ('../../data/dbConfig')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
@@ -17,13 +16,6 @@ async function findById(id) {
 
 async function create(user) {
   try {
-    const usernameTaken = await db('users').where('username', user.username).first()
-    if (usernameTaken) {
-      const error = new Error('username taken')
-      error.statusCode = 409
-      throw error
-    }
-
     const hash = bcrypt.hashSync(user.password, 14);
     user.password = hash;
 
@@ -31,7 +23,6 @@ async function create(user) {
     return await findById(id)
   } catch (err) {
     console.log(err)
-    throw err
   }
 }
 

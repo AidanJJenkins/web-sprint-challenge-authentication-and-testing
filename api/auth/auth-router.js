@@ -1,14 +1,15 @@
 const router = require('express').Router();
 const User = require('./models')
 const bcrypt = require('bcryptjs');
-const checkPayload = require('./middleware')
+const { checkPayload, checkUsername } = require('./middleware')
+//const db = require ('../../data/dbConfig')
 
-router.post('/register', checkPayload, (req, res, next) => {
-  User.create(req.body)
-    .then(user => {
-      res.status(201).json(user)
-    })
-    .catch(next)
+router.post('/register', checkPayload, checkUsername, async (req, res, next) => {
+    User.create(req.body)
+      .then(user => {
+        res.status(201).json(user)
+      })
+      .catch(next)
 });
 
 router.post('/login', checkPayload, (req, res) => {
