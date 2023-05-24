@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { checkPayload, checkUsername } = require('./middleware')
 //const db = require ('../../data/dbConfig')
 
-router.post('/register', checkPayload, checkUsername, async (req, res, next) => {
+router.post('/register', checkPayload, checkUsername, (req, res, next) => {
     User.create(req.body)
       .then(user => {
         res.status(201).json(user)
