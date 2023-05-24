@@ -12,7 +12,7 @@ router.post('/register', checkPayload, checkUsername, (req, res, next) => {
       .catch(next)
 });
 
-router.post('/login', checkPayload, (req, res) => {
+router.post('/login', checkPayload, (req, res, next) => {
   let { username, password } = req.body
   User.findUser({ username })
     .then(user => {
@@ -27,10 +27,11 @@ router.post('/login', checkPayload, (req, res) => {
         res.status(401).json({ message: "invalid credentials" })
       }
     })
-    .catch(error => {
+    /*.catch(error => {
       console.log(error)
       res.status(500).json(error)
-    })
+    })*/
+    .catch(next)
 });
 
 module.exports = router;

@@ -19,12 +19,12 @@ afterAll(async () => {
 describe('sign up with no errors', () => {
   test('Responds with an error if there is no username', async () => {
     const response = await request(server).post('/api/auth/register').send({ password: 'test' })
-    expect(response.status).toBe(400)
+    expect(response.status).toBe(401)
     expect(response.body.message).toBe('username and password required')
   })
   test('Responds with an error if there is no password', async () => {
     const response = await request(server).post('/api/auth/register').send({ username: 'test' })
-    expect(response.status).toBe(400)
+    expect(response.status).toBe(401)
     expect(response.body.message).toBe('username and password required')
   })
 })
@@ -32,12 +32,12 @@ describe('sign up with no errors', () => {
 describe('login with no errors', () => {
   test('Responds with an error if there is no username', async () => {
     const response = await request(server).post('/api/auth/register').send({ password: 'test' })
-    expect(response.status).toBe(400)
+    expect(response.status).toBe(401)
     expect(response.body.message).toBe('username and password required')
   })
   test('Responds with an error if there is no password', async () => {
     const response = await request(server).post('/api/auth/register').send({ username: 'test' })
-    expect(response.status).toBe(400)
+    expect(response.status).toBe(401)
     expect(response.body.message).toBe('username and password required')
   })
 })
