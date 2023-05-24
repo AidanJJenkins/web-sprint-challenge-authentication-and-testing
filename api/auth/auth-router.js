@@ -14,7 +14,6 @@ router.post('/register', checkPayload, checkUsername, async (req, res, next) => 
 
 router.post('/login', checkPayload, (req, res) => {
   let { username, password } = req.body
-
   User.findUser({ username })
     .then(user => {
       let userPassword = user.password
