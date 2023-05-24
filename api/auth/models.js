@@ -6,12 +6,19 @@ const { JWT_SECRET } = require('../secret.js')
 module.exports = {
   create,
   findUser,
-  generateToken
+  generateToken,
+  add
 }
 
 
 async function findById(id) {
   return db('users').where('id', id).first()
+}
+
+async function add(user) {
+  const [id] = await db('users').insert(user)
+  return findById(id)
+
 }
 
 async function create(user) {

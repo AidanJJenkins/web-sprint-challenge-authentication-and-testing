@@ -4,13 +4,25 @@ const bcrypt = require('bcryptjs');
 const { checkPayload, checkUsername } = require('./middleware')
 //const db = require ('../../data/dbConfig')
 
-router.post('/register', checkPayload, checkUsername, (req, res, next) => {
+/*router.post('/register', checkPayload, checkUsername, (req, res, next) => {
     User.create(req.body)
       .then(user => {
         res.status(201).json(user)
       })
       .catch(next)
+}); */
+router.post('/register', checkPayload, checkUsername, (req, res, next) => {
+  const user = req.body
+  const hash = bcrypt.hashSync(user.password, 8)
+  user.password = hash
+
+  User.add(user)
+  .then((newUser) => {
+    res.status(201).json(newUser[0])
+  })
+  .catch(next)
 });
+
 
 router.post('/login', checkPayload, (req, res, next) => {
   let { username, password } = req.body
