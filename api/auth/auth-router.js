@@ -1,30 +1,22 @@
 const router = require('express').Router();
 const User = require('./models')
 const bcrypt = require('bcryptjs');
-const { checkPayload, checkUsername } = require('./middleware')
-//const db = require ('../../data/dbConfig')
+const { checkPayload, checkUsername, loginUsername } = require('./middleware')
 
-/*router.post('/register', checkPayload, checkUsername, (req, res, next) => {
-    User.create(req.body)
-      .then(user => {
-        res.status(201).json(user)
-      })
-      .catch(next)
-}); */
 router.post('/register', checkPayload, checkUsername, (req, res, next) => {
   const user = req.body
   const hash = bcrypt.hashSync(user.password, 8)
   user.password = hash
 
-  User.add(user)
-  .then((newUser) => {
-    res.status(201).json(newUser[0])
+  User.create(user)
+  .then(user => {
+    res.status(201).json(user)
   })
   .catch(next)
 });
 
 
-router.post('/login', checkPayload, (req, res, next) => {
+router.post('/login', checkPayload, loginUsername, (req, res, next) => {
   let { username, password } = req.body
   User.findUser({ username })
     .then(user => {
@@ -39,10 +31,6 @@ router.post('/login', checkPayload, (req, res, next) => {
         res.status(401).json({ message: "invalid credentials" })
       }
     })
-    /*.catch(error => {
-      console.log(error)
-      res.status(500).json(error)
-    })*/
     .catch(next)
 });
 

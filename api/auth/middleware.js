@@ -18,4 +18,13 @@ async function checkUsername(req, res, next) {
   }
 }
 
-module.exports =  { checkPayload, checkUsername }
+async function loginUsername(req, res, next) {
+  const user = await db('users').where("username", req.body.username).first()
+  if (!user) {
+    next({status: 401, message: "invalid credentials"})
+  } else {
+    next()
+  }
+}
+
+module.exports =  { checkPayload, checkUsername, loginUsername }
