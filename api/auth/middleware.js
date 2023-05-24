@@ -3,7 +3,7 @@ const db = require ('../../data/dbConfig')
 const checkPayload = (req, res, next) => {
   const { username, password } = req.body
   if (!username || !password) {
-    res.status(400).json({ message: 'username and password required' })
+    res.status(400).json({ message: "username and password required" })
   } else {
     next()
   }
@@ -14,7 +14,7 @@ async function checkUsername(req, res, next) {
   if (!user) {
     next()
   } else {
-    next({status: 422, message: "Username taken"})
+    next({status: 422, message: "username taken"})
   }
 }
 
